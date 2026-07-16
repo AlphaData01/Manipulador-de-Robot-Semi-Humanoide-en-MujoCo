@@ -1,0 +1,101 @@
+<mujoco model="Manipulador_Robotico_SemiHumanoide">
+
+    <compiler
+        angle="degree"
+        meshdir="assets"
+        autolimits="true"/>
+
+    <option
+        timestep="0.002"
+        gravity="0 0 -9.81"
+        integrator="implicitfast"
+        iterations="30"/>
+
+    <asset>
+
+        <mesh
+            name="bicep_collision_mesh"
+            file="bicep_collision.stl"
+            scale="0.001 0.001 0.001"/>
+
+    </asset>
+
+    <worldbody>
+
+        <!-- Piso fijo -->
+        <geom
+            name="piso"
+            type="plane"
+            size="2 2 0.1"
+            rgba="0.75 0.75 0.75 1"/>
+
+        <!--
+        El bícep:
+        -->
+        <body
+            name="bicep"
+            pos="0 0 0.5"> <!-- 50cm de altura-->
+
+            <freejoint/>
+
+            <geom
+                name="bicep_collision"
+                type="mesh"
+                mesh="bicep_collision_mesh"
+                mass="0.5"
+                rgba="0.8 0.2 0.2 1"/> <!--Color rojo-->
+
+            <!--
+            Punto visual para localizar el centro de la articulación.
+            -->
+            <site
+                name="centro_motor"
+                type="sphere"
+                pos="0.041 0.20 0"
+                size="0.006"
+                rgba="1 1 0 1"/>
+
+            <!--
+            Cuerpo hijo móvil.
+            -->
+            <body
+                name="brazo_movil"
+                pos="0.041 0.20 0">
+
+                <joint
+                    name="joint_motor"
+                    type="hinge"
+                    axis="0 0 1"
+                    range="-180 180"
+                    damping="1"
+                    armature="0.002"/>
+
+                <!--
+                Rectángulo de prueba
+                -->
+                <geom
+                    name="rectangulo_brazo"
+                    type="box"
+                    pos="0.10 0 0"
+                    size="0.10 0.02 0.02"
+                    mass="0.2"
+                    rgba="0.2 0.4 0.9 1"/>
+
+            </body>
+
+        </body>
+
+    </worldbody>
+
+    <actuator>
+
+        <position
+            name="motor_brazo"
+            joint="joint_motor"
+            kp="20"
+            ctrlrange="-60 60"
+            forcerange="-5 5"/>
+
+    </actuator>
+
+</mujoco>
