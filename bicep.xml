@@ -18,6 +18,11 @@
             file="bicep_collision.stl"
             scale="0.001 0.001 0.001"/>
 
+        <mesh
+            name="antebrazo_collision_mesh"
+            file="Antebrazo_colision.stl"
+            scale="0.001 0.001 0.001"/>
+
     </asset>
 
     <worldbody>
@@ -46,39 +51,37 @@
                 rgba="0.8 0.2 0.2 1"/> <!--Color rojo-->
 
             <!--
-            Punto visual para localizar el centro de la articulación.
-            -->
-            <site
-                name="centro_motor"
-                type="sphere"
-                pos="0.041 0.20 0"
-                size="0.006"
-                rgba="1 1 0 1"/>
-
-            <!--
-            Cuerpo hijo móvil.
+            Cuerpo hijo antebrazo.
             -->
             <body
-                name="brazo_movil"
-                pos="0.041 0.20 0">
+                name="antebrazo"
+                pos="0.0241 0.2248 0">
 
                 <joint
                     name="joint_motor"
                     type="hinge"
+                    pos="0 0 0"
                     axis="0 0 1"
-                    range="-180 180"
+                    range="0 60"
                     damping="1"
                     armature="0.002"/>
 
-                <!--
-                Rectángulo de prueba
-                -->
+                <!-- Este punto amarillo es el pivote real -->
+                <site
+                    name="eje_brazo"
+                    type="cylinder"
+                    pos="0 0 0"
+                    size="0.0025 0.036 0.02"
+                    rgba="1 1 0 1"/>
+
+                <!-- La malla se acomoda alrededor del pivote -->
                 <geom
-                    name="rectangulo_brazo"
-                    type="box"
-                    pos="0.10 0 0"
-                    size="0.10 0.02 0.02"
-                    mass="0.2"
+                    name="antebrazo_collision"
+                    type="mesh"
+                    mesh="antebrazo_collision_mesh"
+                    pos="0.002 -0.017 0"
+                    euler="0 230 0"
+                    mass="0.3"
                     rgba="0.2 0.4 0.9 1"/>
 
             </body>
@@ -93,7 +96,7 @@
             name="motor_brazo"
             joint="joint_motor"
             kp="20"
-            ctrlrange="-60 60"
+            ctrlrange="0 60"
             forcerange="-5 5"/>
 
     </actuator>
