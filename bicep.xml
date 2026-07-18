@@ -13,26 +13,63 @@
 
     <asset>
 
+        <texture
+            name="groundplane"
+            type="2d"
+            builtin="checker"
+            rgb1="0.18 0.33 0.55"
+            rgb2="0.28 0.46 0.70"
+            width="512"
+            height="512"/>
+
+        <material
+            name="groundplane"
+            texture="groundplane"
+            texrepeat="25 25"
+            reflectance="0.25"/>
+
+        <!-- Bíceps: colisión -->
         <mesh
             name="bicep_collision_mesh"
             file="bicep_collision.stl"
             scale="0.001 0.001 0.001"/>
 
+        <!-- Bíceps: visual -->
+        <mesh
+            name="bicep_visual_mesh"
+            file="bicep_visual.stl"
+            scale="0.001 0.001 0.001"/>
+
+        <!-- Antebrazo: colisión -->
         <mesh
             name="antebrazo_collision_mesh"
             file="Antebrazo_colision.stl"
             scale="0.001 0.001 0.001"/>
 
+        <!-- Antebrazo: visual -->
+        <mesh
+            name="antebrazo_visual_mesh"
+            file="Antebrazo_visual.stl"
+            scale="0.001 0.001 0.001"/>
+
     </asset>
+    
 
     <worldbody>
+
+        <light
+            pos="0 0 4"
+            dir="0 0 -1"
+            directional="true"
+            diffuse="0.6 0.6 0.6"
+            specular="0.15 0.15 0.15"/>
 
         <!-- Piso fijo -->
         <geom
             name="piso"
             type="plane"
-            size="2 2 0.1"
-            rgba="0.75 0.75 0.75 1"/>
+            size="5 5 0.1"
+            material="groundplane"/>
 
         <!--
         El bícep:
@@ -43,12 +80,25 @@
 
             <freejoint/>
 
+            <!-- Malla visual del bíceps: esta sí la moveremos -->
+            <geom
+                name="bicep_visual"
+                type="mesh"
+                mesh="bicep_visual_mesh"
+                pos="-0.05379 0 -0.01508"
+                euler="0 0 0"
+                contype="0"
+                conaffinity="0"
+                density="0"
+                rgba="0.2 0.2 0.2 1"/>
+
+            <!-- Malla de colisión: no modificar -->
             <geom
                 name="bicep_collision"
                 type="mesh"
                 mesh="bicep_collision_mesh"
                 mass="0.5"
-                rgba="0.8 0.2 0.2 1"/> <!--Color rojo-->
+                rgba="0.8 0.2 0.2 0"/>
 
             <!--
             Cuerpo hijo antebrazo.
@@ -62,9 +112,9 @@
                     type="hinge"
                     pos="0 0 0"
                     axis="0 0 1"
-                    range="0 60"
-                    damping="1"
-                    armature="0.002"/>
+                    range="0 90"
+                    damping="2"
+                    armature="0.005"/>
 
                 <!-- Este punto amarillo es el pivote real -->
                 <site
@@ -74,7 +124,19 @@
                     size="0.0025 0.036 0.02"
                     rgba="1 1 0 1"/>
 
-                <!-- La malla se acomoda alrededor del pivote -->
+                <!-- Malla visual del antebrazo: esta será la que acomodaremos -->
+                <geom
+                    name="antebrazo_visual"
+                    type="mesh"
+                    mesh="antebrazo_visual_mesh"
+                    pos="0.0242 0.01438 0.01837"
+                    euler="0 230 0"
+                    contype="0"
+                    conaffinity="0"
+                    density="0"
+                    rgba="0.75 0.75 0.78 1"/>
+
+                <!-- Malla de colisión del antebrazo: no modificar -->
                 <geom
                     name="antebrazo_collision"
                     type="mesh"
@@ -82,7 +144,7 @@
                     pos="0.002 -0.017 0"
                     euler="0 230 0"
                     mass="0.3"
-                    rgba="0.2 0.4 0.9 1"/>
+                    rgba="0.2 0.4 0.9 0"/>
 
             </body>
 
@@ -91,14 +153,15 @@
     </worldbody>
 
     <actuator>
-
         <position
             name="motor_brazo"
             joint="joint_motor"
-            kp="20"
-            ctrlrange="0 60"
-            forcerange="-5 5"/>
 
+            gear="57.2957795"
+
+            kp="0.0061"
+            ctrlrange="0 90"
+            forcerange="-0.0873 0.0873"/>
     </actuator>
 
 </mujoco>
