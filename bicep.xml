@@ -76,6 +76,18 @@
             file="Hombro_1_visual.stl"
             scale="0.001 0.001 0.001"/>
 
+        <!-- Hombro 2: colisión -->
+        <mesh
+            name="hombro_2_collision_mesh"
+            file="Hombro_2_colision.stl"
+            scale="0.001 0.001 0.001"/>
+
+        <!-- Hombro 2: visual -->
+        <mesh
+            name="hombro_2_visual_mesh"
+            file="Hombro_2_visual.stl"
+            scale="0.001 0.001 0.001"/>
+
     </asset>
     
 
@@ -111,7 +123,7 @@
                 contype="0"
                 conaffinity="0"
                 density="0"
-                rgba="0.75 0.75 0.78 1"/>
+                rgba="0.85 0.85 0.88 1"/>
 
             <!-- Malla de colisión del torso -->
             <geom
@@ -168,6 +180,55 @@
                     conaffinity="0"
                     density="0"
                     rgba="0.45 0.45 0.48 1"/>
+
+                <!-- ======== Hombro 2 ======== -->
+                <body
+                    name="hombro_2"
+                    pos="-0.0007 -0.034 -0.002">
+
+                    <joint
+                        name="joint_hombro_2"
+                        type="hinge"
+                        pos="-0.01 0.0091 -0.045"
+                        axis="1 0 0"
+                        range="-180 30"
+                        damping="2"
+                        armature="0.005"/>
+
+                    <!-- Marcador visual del segundo eje -->
+                    <site
+                        name="eje_hombro_2"
+                        type="cylinder"
+                        pos="-0.01 0.0091 -0.045"
+                        euler="0 90 0"
+                        size="0.004 0.043"
+                        rgba="1 0.5 0 1"/>
+
+                    <!-- Visual: esta se acomoda si aparece desfasada -->
+                    <geom
+                        name="hombro_2_visual"
+                        type="mesh"
+                        mesh="hombro_2_visual_mesh"
+                        pos="0 0 0"
+                        euler="270 0 90"
+                        contype="0"
+                        conaffinity="0"
+                        density="0"
+                        rgba="0.75 0.75 0.78 1"/>
+
+                    <!-- STL de colisión del hombro 2 -->
+                    <geom
+                        name="hombro_2_collision"
+                        type="mesh"
+                        mesh="hombro_2_collision_mesh"
+                        pos="0 0 0"
+                        euler="270 0 90"
+                        mass="0.20"
+                        contype="1"
+                        conaffinity="1"
+                        rgba="0.2 0.4 0.9 0"/>
+
+                </body>
 
             </body>
 
@@ -271,6 +332,14 @@
             gear="57.2957795"
             kp="0.0061"
             ctrlrange="0 90"
+            forcerange="-0.0873 0.0873"/>
+
+        <position
+            name="motor_hombro_2"
+            joint="joint_hombro_2"
+            gear="57.2957795"
+            kp="0.0061"
+            ctrlrange="-180 30"
             forcerange="-0.0873 0.0873"/>
 
     </actuator>
