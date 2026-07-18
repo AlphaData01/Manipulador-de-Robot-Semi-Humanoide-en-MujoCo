@@ -70,6 +70,12 @@
             file="Hombro_1_colision.stl"
             scale="0.001 0.001 0.001"/>
 
+        <!-- Hombro 1: visual -->
+        <mesh
+            name="hombro_1_visual_mesh"
+            file="Hombro_1_visual.stl"
+            scale="0.001 0.001 0.001"/>
+
     </asset>
     
 
@@ -105,7 +111,7 @@
                 contype="0"
                 conaffinity="0"
                 density="0"
-                rgba="0.75 0.75 0.78 0"/>
+                rgba="0.75 0.75 0.78 1"/>
 
             <!-- Malla de colisión del torso -->
             <geom
@@ -114,19 +120,19 @@
                 mesh="torso_collision_mesh"
                 pos="0 0 0.8782"
                 euler="0 180 0"
-                rgba="0.55 0.55 0.30 1"/>
+                rgba="0.55 0.55 0.30 0"/>
 
             <!-- ======== Hombro 1 ======== -->
             <body
                 name="hombro_1"
-                pos="0.1 0.06 1.045">
+                pos="0.1439 0.063 1.05485">
 
                 <joint
                     name="joint_hombro_1"
                     type="hinge"
-                    pos="0 0 0"
+                    pos="0.0118 -0.024 -0.0094"
                     axis="0 1 0"
-                    range="-90 90"
+                    range="0 90"
                     damping="2"
                     armature="0.005"/>
 
@@ -134,9 +140,9 @@
                 <site
                     name="eje_hombro_1"
                     type="cylinder"
-                    pos="0 0 0"
+                    pos="0.0118 -0.024 -0.0094"
                     euler="90 0 0"
-                    size="0.003 0.05"
+                    size="0.0015 0.043"
                     rgba="1 1 0 1"/>
 
                 <!-- STL de colisión del hombro -->
@@ -149,7 +155,19 @@
                     mass="0.20"
                     contype="0"
                     conaffinity="0"
-                    rgba="0.15 0.65 0.25 1"/>
+                    rgba="0.15 0.65 0.25 0"/>
+                
+                    <!-- STL visual del hombro -->
+                <geom
+                    name="hombro_1_visual"
+                    type="mesh"
+                    mesh="hombro_1_visual_mesh"
+                    pos="0 0 0"
+                    euler="90 0 270"
+                    contype="0"
+                    conaffinity="0"
+                    density="0"
+                    rgba="0.45 0.45 0.48 1"/>
 
             </body>
 
@@ -252,7 +270,7 @@
             joint="joint_hombro_1"
             gear="57.2957795"
             kp="0.0061"
-            ctrlrange="-90 90"
+            ctrlrange="0 90"
             forcerange="-0.0873 0.0873"/>
 
     </actuator>
