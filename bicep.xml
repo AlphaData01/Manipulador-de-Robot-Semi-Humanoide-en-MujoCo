@@ -52,6 +52,18 @@
             file="Antebrazo_visual.stl"
             scale="0.001 0.001 0.001"/>
 
+        <!-- Torso: colisión -->
+        <mesh
+            name="torso_collision_mesh"
+            file="Torso_colision.stl"
+            scale="0.001 0.001 0.001"/>
+
+        <!-- Torso: visual -->
+        <mesh
+            name="torso_visual_mesh"
+            file="Torso_visual.stl"
+            scale="0.001 0.001 0.001"/>
+
     </asset>
     
 
@@ -72,8 +84,41 @@
             material="groundplane"/>
 
         <!--
-        El bícep:
+        Torso independiente y fijo al mundo.
+
+        Se puede acomodar desde el XML usando:
+        pos   = posición
+        euler = rotación
         -->
+        <body
+            name="torso"
+            pos="0.30 0 0.25"
+            euler="0 0 0">
+
+            <!-- Malla visual del torso -->
+            <geom
+                name="torso_visual"
+                type="mesh"
+                mesh="torso_visual_mesh"
+                pos="0 0 0.8782"
+                euler="0 180 0"
+                contype="0"
+                conaffinity="0"
+                density="0"
+                rgba="0.75 0.75 0.78 1"/>
+
+            <!-- Malla de colisión del torso -->
+            <geom
+                name="torso_collision"
+                type="mesh"
+                mesh="torso_collision_mesh"
+                pos="0 0 0.8782"
+                euler="0 180 0"
+                rgba="0.55 0.55 0.30 0"/>
+
+        </body>
+
+        <!-- El bícep -->
         <body
             name="bicep"
             pos="0 0 0.5"> <!-- 50cm de altura-->
